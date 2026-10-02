@@ -12,6 +12,8 @@ font_thickness = 2
 bg_color = (0, 0, 255) 
 text_color = (0, 0,  0)
 cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    raise SystemExit("Could not open the webcam. Check that it is connected and not in use.")
 
 #####################################################################################################
 def calculate_angle(a, b, c):
@@ -240,6 +242,8 @@ def Dumbbell_push_press(results,image):
 with mp_pose.Pose(min_detection_confidence=0.5,min_tracking_confidence=0.5) as pose:
     while cap.isOpened():
         ret, frame = cap.read()
+        if not ret or frame is None:
+            break
         frame = cv2.resize(frame, (1300, 700))
         cv2.putText(frame, "press 1 for Dumbbell Bicep Curl", (450, 25), font, font_scale, text_color, font_thickness,
                         cv2.LINE_AA)
@@ -259,6 +263,8 @@ with mp_pose.Pose(min_detection_confidence=0.5,min_tracking_confidence=0.5) as p
             key=-1
             while cap.isOpened():
                 ret,frame = cap.read()
+                if not ret or frame is None:
+                    break
                 frame = cv2.resize(frame, (1300, 700))
                 image= cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 
@@ -274,6 +280,8 @@ with mp_pose.Pose(min_detection_confidence=0.5,min_tracking_confidence=0.5) as p
             bg_color=(0,0,255)
             while cap.isOpened():
                 ret,frame = cap.read()
+                if not ret or frame is None:
+                    break
                 frame = cv2.resize(frame, (1300, 700))
                 image= cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 image.flags.writeable = False
@@ -293,6 +301,8 @@ with mp_pose.Pose(min_detection_confidence=0.5,min_tracking_confidence=0.5) as p
              bg_color=(0,0,255)
              while cap.isOpened():
                 ret,frame = cap.read()
+                if not ret or frame is None:
+                    break
                 frame = cv2.resize(frame, (1300, 700))
                 image= cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 image.flags.writeable = False
